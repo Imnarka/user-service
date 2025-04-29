@@ -14,7 +14,6 @@
 *.cover
 
 # Generated Go files
-/internal/di/wire_gen.go
 /proto/*.pb.go
 /proto/*_grpc.pb.go
 
