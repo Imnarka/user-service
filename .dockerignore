@@ -1,0 +1,8 @@
+*
+!cmd
+!internal
+!migrations
+!.env
+!entrypoint.sh
+!go.mod
+!go.sum

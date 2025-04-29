@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  user_svc:
+    build: .
+    container_name: user_svc
+    depends_on:
+      database:
+        condition: service_healthy
+    env_file:
+      - .env
+    ports:
+      - "50051:50051"
+    networks:
+      - app_network
+
+  database:
+    image: postgres:16
+    container_name: postgres-container
+    hostname: db
+    restart: always
+    ports:
+      - "5432:5432"
+    env_file:
+      - .env
+    volumes:
+      - ./pg_data:/var/lib/postgresql/data
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U user -d postgres"]
+      interval: 10s
+      retries: 10
+      start_period: 10s
+      timeout: 5s
+
+networks:
+  app_network:
+    driver: bridge
