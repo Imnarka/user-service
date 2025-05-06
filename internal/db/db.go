@@ -2,10 +2,11 @@ package db
 
 import (
 	"fmt"
+	"time"
+
 	"github.com/Imnarka/user-service/internal/logger"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
-	"time"
 )
 
 type DatabaseConfig struct {
@@ -24,6 +25,7 @@ const (
 func InitDB(cfg *DatabaseConfig, logger *logger.Logger) (*gorm.DB, error) {
 	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=%s",
 		cfg.Host, cfg.Port, cfg.User, cfg.Password, cfg.DBName, cfg.SSLMode)
+	logger.Info(dsn)
 	var db *gorm.DB
 	var err error
 	for i := 0; i < maxRetries; i++ {
